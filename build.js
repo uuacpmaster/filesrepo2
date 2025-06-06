@@ -2,7 +2,7 @@ const fs = require('fs');
 const https = require('https');
 
 const OWNER = 'uuacpmaster';
-const REPO = 'filerepo2';
+const REPO = 'filesrepo2';
 const BRANCH = 'main';
 const API_BASE = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
 const USER_AGENT = 'StaticSiteBuilder';
@@ -54,16 +54,21 @@ async function buildTree(path = '') {
   return result;
 }
 
-function renderTree(tree) {
-  let html = '<ul>';
+function renderTree(tree, indent = 0) {
+  const pad = '  '.repeat(indent);
+  let html = `${pad}<ul>\n`;
+
   for (const item of tree) {
     if (item.isFolder) {
-      html += `<li><strong>${item.name}</strong>${renderTree(item.children)}</li>`;
+      html += `${pad}  <li><strong>${item.name}</strong>\n`;
+      html += renderTree(item.children, indent + 2);
+      html += `${pad}  </li>\n`;
     } else {
-      html += `<li><a href="${item.url}" target="_blank">${item.name}</a></li>`;
+      html += `${pad}  <li><a href="${item.url}" target="_blank">${item.name}</a></li>\n`;
     }
   }
-  html += '</ul>';
+
+  html += `${pad}</ul>\n`;
   return html;
 }
 

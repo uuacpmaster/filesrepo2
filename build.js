@@ -2,7 +2,7 @@ const fs = require('fs');
 const https = require('https');
 
 const OWNER = 'uuacpmaster';
-const REPO = 'filesrepo2';
+const REPO = 'filerepo2';
 const BRANCH = 'main';
 const API_BASE = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
 const USER_AGENT = 'StaticSiteBuilder';
